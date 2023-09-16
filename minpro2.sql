@@ -32,6 +32,37 @@ VALUES (
 'breadpit@mail.com',
 'breadbradpit123'
 );
+INSERT INTO `minpro2`.`users` (
+`account_type`,
+`first_name`,
+`last_name`,
+`username`, 
+`email`, 
+`password`) 
+VALUES (
+'user',
+'Fauza',
+'Rizky',
+'FRizky',
+'fauzariz@mail.com',
+'fauzar123'
+);
+
+INSERT INTO `minpro2`.`users` (
+`account_type`,
+`first_name`,
+`last_name`,
+`username`, 
+`email`, 
+`password`) 
+VALUES (
+'user',
+'Anida',
+'Bajumi',
+'anidabbajumi',
+'anidaaaa@mail.com',
+'aniiiiida!123'
+);
 
 -- delete existing table
 DROP TABLE users;
