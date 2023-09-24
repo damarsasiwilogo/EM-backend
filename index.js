@@ -1,6 +1,8 @@
 // import express
-const express = require("express")(); // create an instance of the express application.
+const express = require("express"); // create an instance of the express application.
 const PORT = 8000;
+
+const sql = require("mysql2");
 
 const app = express();
 app.use(express.json());
