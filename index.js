@@ -1,5 +1,5 @@
 // import express
-const express = require("express")(); // create an instance of the express application.
+const express = require("express"); // create an instance of the express application.
 const PORT = 8000;
 
 const sql = require("mysql2");
@@ -9,7 +9,7 @@ app.use(express.json());
 
 // Routing
 
-// middleware
+// 404 middleware
 app.use((req, res) => {
   console.log(`404: ${req.url}`);
   req.status(404).json({
@@ -17,6 +17,7 @@ app.use((req, res) => {
   });
 });
 
+// error middleware
 app.use((err, req, res, next) => {
   console.log(`500: ${req.url}`);
   console.log(error);
