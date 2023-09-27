@@ -1,3 +1,6 @@
+require("dotenv").config({
+  path: __dirname + "/.env",
+});
 // import express
 const express = require("express"); // create an instance of the express application.
 const PORT = 8000;
