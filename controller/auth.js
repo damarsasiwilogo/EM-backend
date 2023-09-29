@@ -43,12 +43,12 @@ exports.handleRegister = async (req, res) => {
         lastName: result.lastName,
       },
     });
-    console.log(resultEmail);
-  } catch (error) {
-    console.error(error);
-    res.status(400).json({
+    
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
       ok: false,
-      message: String(error),
+      message: String(err),
     });
   }
 };
