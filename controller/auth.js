@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const { Account, Rrferral } = require("../models");
 const { Op } = require("sequelize");
 
@@ -43,7 +43,6 @@ exports.handleRegister = async (req, res) => {
         lastName: result.lastName,
       },
     });
-    
   } catch (err) {
     console.error(err);
     res.status(500).json({
