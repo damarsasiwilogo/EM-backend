@@ -10,7 +10,10 @@ const sql = require("mysql2");
 const app = express();
 app.use(express.json());
 
+const authRouter = require("./routes/auth");
+
 // Routing
+app.use("/auth", authRouter);
 
 // 404 middleware
 app.use((req, res) => {
