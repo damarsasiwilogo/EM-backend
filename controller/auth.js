@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const { Account, Rrferral } = require("../models");
+const { Account, Referral } = require("../models");
 const { Op } = require("sequelize");
 
 const JWT_SECRET_KEY = "ini_JWT_loh";
