@@ -13,7 +13,7 @@ exports.registerValidationRules = [
       minSymbols: 0,
       minNumbers: 0,
     })
-    .withMessage("Password must be at least 8 characters long"),
+    .withMessage("Password must be at least have 1 uppercase character"),
   body("fistName")
     .optional()
     .isLength({
