@@ -15,6 +15,19 @@ exports.handleRegister = async (req, res) => {
     phoneNumber,
     accountType,
   } = req.body;
+
+  const existingAccount = await Account.findOne({
+    where: {
+      [Op.or]: [{ username }, { email }, { phoneNumber }],
+    },
+    if(existingAccount) {
+      return res.status(400).json({
+        ok: false,
+        message: "Username, email or phone number is already registered",
+      });
+    },
+  });
+
   try {
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
@@ -26,7 +39,7 @@ exports.handleRegister = async (req, res) => {
     const result = await Account.create({
       username,
       email,
-      password,
+      password: hashPassword,
       firstName,
       lastName,
       phoneNumber,
@@ -41,8 +54,10 @@ exports.handleRegister = async (req, res) => {
         email: result.email,
         firstName: result.firstName,
         lastName: result.lastName,
+        referralCode: "EM-" + result.username.toUpperCase(),
       },
     });
+    
   } catch (err) {
     console.error(err);
     res.status(500).json({
@@ -82,9 +97,9 @@ exports.handleLogin = async (req, res) => {
       return;
     }
 
-    const payload = { id: account.id, isVerified: account.isVerified };
+    const payload = { id: account.id, accountType: account.accountType };
     const token = jwt.sign(payload, JWT_SECRET_KEY, {
-      expiresIn: "2h",
+      expiresIn: "1h",
     });
 
     res.json({
