@@ -20,13 +20,14 @@ exports.handleRegister = async (req, res) => {
     where: {
       [Op.or]: [{ username }, { email }, { phoneNumber }],
     },
-    if(existingAccount) {
-      return res.status(400).json({
-        ok: false,
-        message: "Username, email or phone number is already registered",
-      });
-    },
   });
+
+  if (existingAccount) {
+    return res.status(400).json({
+      ok: false,
+      message: "Username, email or phone number is already registered",
+    });
+  }
 
   try {
     const salt = await bcrypt.genSalt(10);
@@ -57,7 +58,6 @@ exports.handleRegister = async (req, res) => {
         referralCode: "EM-" + result.username.toUpperCase(),
       },
     });
-    
   } catch (err) {
     console.error(err);
     res.status(500).json({
