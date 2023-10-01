@@ -78,6 +78,12 @@ exports.handleLogin = async (req, res) => {
           password: identity,
         },
       },
+      includes: [
+        {
+          model: Referral,
+          attributes: ["code"],
+        },
+      ],
     });
 
     if (!account) {
@@ -102,20 +108,22 @@ exports.handleLogin = async (req, res) => {
       expiresIn: "1h",
     });
 
-    res.json({
+    // const response = account.map((akun) => ({
+    //   token,
+    //   profile: {
+    //     firstName: akun.firstName,
+    //     lastName: akun.lastName,
+    //     username: akun.username,
+    //     email: akun.email,
+    //     phoneNumber: akun.phoneNumber,
+    //     referralCode: akun.Referral.code,
+    //     accountType: akun.accountType,
+    //   },
+    // }));
+
+    res.status(200).json({
       ok: true,
-      data: {
-        token,
-        profile: {
-          firstName: account.firstName,
-          lastName: account.lastName,
-          username: account.username,
-          email: account.email,
-          phoneNumber: account.phoneNumber,
-          referralId: account.referralId,
-          accountType: account.accountType,
-        },
-      },
+      data: token, account,
     });
   } catch (err) {
     res.status(500).json({
