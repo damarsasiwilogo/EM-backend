@@ -2,6 +2,9 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { Account, Referral } = require("../models");
 const { Op } = require("sequelize");
+const hbs = require("handlebars");
+const fs = require("fs");
+const mailer = require("../lib/nodemailer");
 
 const JWT_SECRET_KEY = "ini_JWT_loh";
 
@@ -46,6 +49,22 @@ exports.handleRegister = async (req, res) => {
       phoneNumber,
       accountType,
       referralId: referral.id,
+    });
+
+    const templateRaw = fs.readFileSync(
+      __dirname + "/../template/template.html",
+      "utf8"
+    );
+
+    const templateCompile = hbs.compile(templateRaw);
+    const emailHTML = templateCompile({
+      firstName: result.firstName,
+    });
+    const resultEmail = await mailer.sendMail({
+      to: result.email,
+      from: process.env.SMTP_USER,
+      subject: "Verify your email to complete registration",
+      html: emailHTML,
     });
 
     res.json({
@@ -120,19 +139,6 @@ exports.handleLogin = async (req, res) => {
         accountType: account.accountType,
       },
     };
-
-    // const response = account.map((akun) => ({
-    //   token,
-    //   profile: {
-    //     firstName: akun.firstName,
-    //     lastName: akun.lastName,
-    //     username: akun.username,
-    //     email: akun.email,
-    //     phoneNumber: akun.phoneNumber,
-    //     referralCode: akun.Referral.code,
-    //     accountType: akun.accountType,
-    //   },
-    // }));
 
     res.status(200).json({
       ok: true,
