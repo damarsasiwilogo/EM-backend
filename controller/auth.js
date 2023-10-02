@@ -78,7 +78,7 @@ exports.handleLogin = async (req, res) => {
           password: identity,
         },
       },
-      includes: [
+      include: [
         {
           model: Referral,
           attributes: ["code"],
@@ -108,6 +108,19 @@ exports.handleLogin = async (req, res) => {
       expiresIn: "1h",
     });
 
+    const response = {
+      token,
+      profile: {
+        firstName: account.firstName,
+        lastName: account.lastName,
+        username: account.username,
+        email: account.email,
+        phoneNumber: account.phoneNumber,
+        referralCode: account.Referral.code,
+        accountType: account.accountType,
+      },
+    };
+
     // const response = account.map((akun) => ({
     //   token,
     //   profile: {
@@ -123,7 +136,7 @@ exports.handleLogin = async (req, res) => {
 
     res.status(200).json({
       ok: true,
-      data: token, account,
+      data: response,
     });
   } catch (err) {
     res.status(500).json({
