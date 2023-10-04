@@ -1,5 +1,5 @@
 "use strict";
-const { Model } = require("sequelize");
+const { Model, BOOLEAN } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Event extends Model {
     /**
@@ -15,7 +15,10 @@ module.exports = (sequelize, DataTypes) => {
   Event.init(
     {
       eventName: DataTypes.STRING,
-      accountId: DataTypes.INTEGER,
+      accountId: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+      },
       type: DataTypes.STRING,
       location: DataTypes.STRING,
       description: DataTypes.STRING,
@@ -24,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
       gold_ticket_price: DataTypes.INTEGER,
       premium_ticket_price: DataTypes.INTEGER,
       event_img: DataTypes.STRING,
+      isActive: DataTypes.BOOLEAN,
     },
     {
       sequelize,
