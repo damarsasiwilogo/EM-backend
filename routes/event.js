@@ -14,5 +14,10 @@ router.post(
 
 router.get("/", eventController.getAllEvents);
 router.get("/:eventId", eventController.getEventId);
+router.delete(
+  "/:eventId",
+  authMiddleware.validateToken,
+  eventController.destroyEvent
+);
 
 module.exports = router;
