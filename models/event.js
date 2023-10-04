@@ -8,15 +8,21 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Event.hasOne(models.Event, { foreignKey: "accountId" });
+      Event.belongsTo(models.Account, { foreignKey: "accountId" });
+      // define association here
     }
   }
   Event.init(
     {
       eventName: DataTypes.STRING,
+      accountId: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       location: DataTypes.STRING,
       description: DataTypes.STRING,
-      date_time: DataTypes.STRING,
+      date_time: DataTypes.DATE,
+      silver_ticket_price: DataTypes.INTEGER,
+      gold_ticket_price: DataTypes.INTEGER,
+      premium_ticket_price: DataTypes.INTEGER,
       event_img: DataTypes.STRING,
     },
     {

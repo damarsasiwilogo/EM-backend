@@ -11,14 +11,16 @@ const app = express();
 app.use(express.json());
 
 const authRouter = require("./routes/auth");
+const eventRouter = require("./routes/event");
 
 // Routing
 app.use("/auth", authRouter);
+app.use("/event", eventRouter);
 
 // 404 middleware
 app.use((req, res) => {
   console.log(`404: ${req.url}`);
-  req.status(404).json({
+  res.status(404).json({
     msg: "Not Found Broo",
   });
 });
@@ -26,10 +28,10 @@ app.use((req, res) => {
 // error middleware
 app.use((err, req, res, next) => {
   console.log(`500: ${req.url}`);
-  console.log(error);
-  req.status(500).json({
+  console.log(err);
+  res.status(500).json({
     msg: "Internal Server Error Broo",
-    error,
+    err,
   });
 });
 

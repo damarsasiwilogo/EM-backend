@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Account.belongsTo(models.Referral, { foreignKey: "referralId" });
+      Account.hasMany(models.Event, { foreignKey: "accountId" });
     }
   }
   Account.init(
