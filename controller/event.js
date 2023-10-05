@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const { Account, Referral, Event } = require("../models");
 const { Op } = require("sequelize");
 
-exports.handleCreateEvent = async (req, res) => {
+exports.handleCreateEvent = async (req, res, file) => {
   const {
     eventName,
     type,
@@ -16,7 +16,7 @@ exports.handleCreateEvent = async (req, res) => {
     isActive,
   } = req.body;
   const accountId = req.user.id;
-  const { filename } = req.file;
+  const { filename } = file;
 
   try {
     const event = await Event.create({

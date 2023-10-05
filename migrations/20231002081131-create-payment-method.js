@@ -9,25 +9,28 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
+      paymentMethodName: {
+        type: Sequelize.ENUM("Credit Card", "BCA Virtual Account", "Mandiri Virtual Account", "BNI Virtual Account", "GOPAY", "OVO", "DANA")
+      },
+      cardNumber: {
         type: Sequelize.STRING
       },
-      card_number: {
+      cardHolder: {
         type: Sequelize.STRING
       },
-      card_holder: {
+      cardMonth: {
         type: Sequelize.STRING
       },
-      card_year: {
+      cardYear: {
         type: Sequelize.STRING
       },
-      card_month: {
+      cardCvv: {
         type: Sequelize.STRING
       },
-      card_cvv: {
+      vaNumber: {
         type: Sequelize.STRING
       },
-      va_number: {
+      eWalletNumber: {
         type: Sequelize.STRING
       },
       createdAt: {
