@@ -17,7 +17,7 @@ exports.handleCreateEvent = async (req, res, file) => {
     premium_ticket_price,
   } = req.body;
   const accountId = req.user.id;
-  const { filename } = file;
+  const filename = req.file.filename;
 
   try {
     const event = await Event.create({
