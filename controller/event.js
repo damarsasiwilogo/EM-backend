@@ -103,10 +103,10 @@ exports.getAllEvents = async (req, res) => {
 };
 exports.getEventId = async (req, res) => {
   try {
-    const { accountId } = req.params;
+    const { eventId } = req.params;
     const datas = await Event.findAll({
       where: {
-        accountId,
+        id: eventId,
       },
       include: [
         {
