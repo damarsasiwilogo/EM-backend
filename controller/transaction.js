@@ -70,7 +70,13 @@ exports.handleCreateTransaction = async (req, res) => {
       }
     }
 
-    // Step 5: Validate credit card details
+    // Step 5: Validate credit card detail
+    let cardNumber = req.body.cardNumber;
+    let cardHolder = req.body.cardHolder;
+    let cardMonth = req.body.cardMonth;
+    let cardYear = req.body.cardYear;
+    let cardCvv = req.body.cardCvv;
+
     if (paymentMethod === "Credit Card") {
       if (!cardNumber || !cardHolder || !cardMonth || !cardYear || !cardCvv) {
         return res.status(400).json({
@@ -111,11 +117,6 @@ exports.handleCreateTransaction = async (req, res) => {
     // Step 6: Create a new PaymentMethod record with vaNumber and eWalletNumber
     let vaNumber = null;
     let eWalletNumber = null;
-    let cardNumber = null;
-    let cardHolder = null;
-    let cardMonth = null;
-    let cardYear = null;
-    let cardCvv = null;
 
     if (paymentMethod === "BCA Virtual Account") {
       vaNumber = "88000" + account.phoneNumber;
