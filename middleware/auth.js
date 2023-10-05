@@ -36,3 +36,14 @@ exports.validateToken = (req, res, next) => {
     });
   }
 };
+
+exports.checkRoleUser = (req, res, next) => {
+  if (req.user.role !== "User") {
+    res.status(403).json({
+      ok: false,
+      message: "Forbidden broo!!",
+    });
+    return;
+  }
+  next();
+}

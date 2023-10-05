@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Transaction extends Model {
     /**
@@ -10,21 +8,32 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Transaction.hasMany(models.Ticket, { foreignKey: "transactionId" });
+      Transaction.belongsTo(models.Event, { foreignKey: "eventId" });
+      Transaction.belongsTo(models.PaymentMethod, { foreignKey: "paymentMethodId" });
+      Transaction.belongsTo(models.Account, { foreignKey: "accountId" });
+      Transaction.belongsTo(models.Coupon, { foreignKey: "couponId" });
+      Transaction.belongsTo(models.Referral, { foreignKey: "referralId" });
     }
   }
-  Transaction.init({
-    referral_id: DataTypes.INTEGER,
-    account_id: DataTypes.INTEGER,
-    event_id: DataTypes.INTEGER,
-    payment_method: DataTypes.INTEGER,
-    transaction_date: DataTypes.DATE,
-    ticket_type: DataTypes.STRING,
-    quantity_total: DataTypes.INTEGER,
-    total_price: DataTypes.FLOAT
-  }, {
-    sequelize,
-    modelName: 'Transaction',
-  });
+  Transaction.init(
+    {
+      eventId: DataTypes.INTEGER,
+      accountId: DataTypes.INTEGER,
+      transactionDate: DataTypes.DATE,
+      paymentMethodId: DataTypes.INTEGER,
+      referralId: DataTypes.INTEGER,
+      couponId: DataTypes.INTEGER,
+      quantityGold: DataTypes.INTEGER,
+      quantityPlatinum: DataTypes.INTEGER,
+      quantityDiamond: DataTypes.INTEGER,
+      quantityTotal: DataTypes.INTEGER,
+      totalPrice: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: "Transaction",
+    }
+  );
   return Transaction;
 };

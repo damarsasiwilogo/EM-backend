@@ -5,7 +5,7 @@ const { Op } = require("sequelize");
 const event = require("../models/event");
 const account = require("../models/account");
 
-exports.handleCreateEvent = async (req, res) => {
+exports.handleCreateEvent = async (req, res, file) => {
   const {
     eventName,
     type,
@@ -17,7 +17,7 @@ exports.handleCreateEvent = async (req, res) => {
     premium_ticket_price,
   } = req.body;
   const accountId = req.user.id;
-  const { filename } = req.file;
+  const { filename } = file;
 
   try {
     const event = await Event.create({

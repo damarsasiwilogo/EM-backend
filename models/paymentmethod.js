@@ -10,17 +10,18 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      PaymentMethod.hasMany(models.Transaction, { foreignKey: "paymentMethodId"})
     }
   }
   PaymentMethod.init({
-    name: DataTypes.STRING,
-    card_number: DataTypes.STRING,
-    card_holder: DataTypes.STRING,
-    card_year: DataTypes.STRING,
-    card_month: DataTypes.STRING,
-    card_cvv: DataTypes.STRING,
-    va_number: DataTypes.STRING
+    paymentMethodName: DataTypes.ENUM("Credit Card", "BCA Virtual Account", "Mandiri Virtual Account", "BNI Virtual Account", "GOPAY", "OVO", "DANA"),
+    cardNumber: DataTypes.STRING,
+    cardHolder: DataTypes.STRING,
+    cardMonth: DataTypes.STRING,
+    cardYear: DataTypes.STRING,
+    cardCvv: DataTypes.STRING,
+    vaNumber: DataTypes.STRING,
+    eWalletNumber: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'PaymentMethod',
