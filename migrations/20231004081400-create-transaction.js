@@ -50,10 +50,10 @@ module.exports = {
       quantityGold: {
         type: Sequelize.INTEGER
       },
-      quantityPlatinum: {
+      quantityPremium: {
         type: Sequelize.INTEGER
       },
-      quantityDiamond: {
+      quantitySilver: {
         type: Sequelize.INTEGER
       },
       quantityTotal: {

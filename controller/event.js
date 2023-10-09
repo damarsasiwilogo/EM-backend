@@ -16,7 +16,7 @@ exports.handleCreateEvent = async (req, res, file) => {
     isActive,
   } = req.body;
   const accountId = req.user.id;
-  const { filename } = file;
+  const filename = req.file.filename;
 
   try {
     const event = await Event.create({

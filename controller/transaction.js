@@ -2,7 +2,7 @@ const { Event, Transaction, Referral, Coupon, Account, PaymentMethod, Ticket } =
 
 exports.handleCreateTransaction = async (req, res) => {
   const eventId = req.params.eventId;
-  const { quantityGold, quantityPlatinum, quantityDiamond, referralCode, couponCode, paymentMethod, cardNumber, cardHolder, cardMonth, cardYear, cardCvv } = req.body;
+  const { quantityGold, quantityPremium, quantitySilver, referralCode, couponCode, paymentMethod, cardNumber, cardHolder, cardMonth, cardYear, cardCvv } = req.body;
 
   try {
     // Step 1: Retrieve the user's account based on userId
@@ -30,7 +30,7 @@ exports.handleCreateTransaction = async (req, res) => {
     }
 
     // Calculate the total quantity
-    const quantityTotal = quantityGold + quantityPlatinum + quantityDiamond;
+    const quantityTotal = quantityGold + quantityPremium + quantitySilver;
 
     // Step 3: Validate referral code (if provided)
     let referral = null;
@@ -148,19 +148,19 @@ exports.handleCreateTransaction = async (req, res) => {
 
     // Step 7: Calculate the base total price without coupon discount
     const goldTicketPrice = event.gold_ticket_price;
-    const platinumTicketPrice = event.platinum_ticket_price;
-    const diamondTicketPrice = event.diamond_ticket_price;
+    const premium_ticket_price = event.premium_ticket_price;
+    const silver_ticket_price = event.silver_ticket_price;
     let baseTotalPrice = 0;
     if (quantityGold) {
       baseTotalPrice += quantityGold * goldTicketPrice;
     }
 
-    if (quantityPlatinum) {
-      baseTotalPrice += quantityPlatinum * platinumTicketPrice;
+    if (quantityPremium) {
+      baseTotalPrice += quantityPremium * premium_ticket_price;
     }
 
-    if (quantityDiamond) {
-      baseTotalPrice += quantityDiamond * diamondTicketPrice;
+    if (quantitySilver) {
+      baseTotalPrice += quantitySilver * silver_ticket_price;
     }
 
     // Step 8: Calculate the total price with coupon discount (if applicable)
@@ -174,8 +174,8 @@ exports.handleCreateTransaction = async (req, res) => {
       eventId: event.id,
       accountId: req.user.id, // Assuming 'eventId' is a foreign key in Transaction model
       quantityGold,
-      quantityPlatinum,
-      quantityDiamond,
+      quantityPremium,
+      quantitySilver,
       quantityTotal,
       transactionDate: new Date(),
       referralId: referral ? referral.id : null,
@@ -189,11 +189,11 @@ exports.handleCreateTransaction = async (req, res) => {
     if (quantityGold > 0) {
       quantities.gold = quantityGold;
     }
-    if (quantityPlatinum > 0) {
-      quantities.platinum = quantityPlatinum;
+    if (quantityPremium > 0) {
+      quantities.premium = quantityPremium;
     }
-    if (quantityDiamond > 0) {
-      quantities.diamond = quantityDiamond;
+    if (quantitySilver > 0) {
+      quantities.silver = quantitySilver;
     }
 
     await Ticket.create({
